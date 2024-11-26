@@ -1,5 +1,6 @@
 package com.armakuni.fizzbuzz;
 
+import com.armakuni.fizzbuzz.controller.FizzBuzzController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,10 +17,10 @@ public class FizzBuzzControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void testFizzBuzzForMultipleOfThree() throws Exception {
-        mockMvc.perform(get("/fizzbuzz/3"))
+    public void shouldReturnHealthCheckMessage() throws Exception {
+        mockMvc.perform(get("/healthcheck"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Fizz"));
+                .andExpect(content().string("Service is up!"));
     }
 
 }
