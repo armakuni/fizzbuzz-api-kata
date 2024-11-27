@@ -8,16 +8,16 @@ const express = require('express');
 const app = express();
 
 app.get('/health', function(req, res) {
-  res.status(201);
+  res.status(200);
 });
 
 
 describe('GET /health', function() {
-  it('responds with HTTP 201', function(done) {
+  it('responds with HTTP 200', function(done) {
     request(app)
       .get('/health')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(201, done);
+      .expect(200, done);
   });
 });
