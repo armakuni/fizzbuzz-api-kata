@@ -1,22 +1,23 @@
 import {describe, expect, it} from "vitest";
 import {Response, Request} from "express";
 
-class HealthContoller {
-    getAction(req: Request, resp: Response) {
-        resp.status(201);
-    }
-}
+const request = require('supertest');
+const response = require('supertest');
+const express = require('express');
 
-describe('Health Check HTTP Handler', () => {
-    describe('When the service is healthy', () => {
-        it('should return HTTP 200', () => {
-            const resp = new Response();
-            const req = new Request(new URL("http://example.com/health"));
+const app = express();
 
-            const controller = new HealthContoller();
-            controller.getAction(req, resp);
+app.get('/health', function(req, res) {
+  res.status(201);
+});
 
-            expect(resp.status).toEqual(201);
-        });
-    });
+
+describe('GET /health', function() {
+  it('responds with HTTP 201', function(done) {
+    request(app)
+      .get('/health')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(201, done);
+  });
 });
