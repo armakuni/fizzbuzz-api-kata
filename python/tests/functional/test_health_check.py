@@ -10,3 +10,4 @@ def test_health_check_endpoint():
     flask_app = app.test_client()
     response = flask_app.get('/health')
     assert response.status_code == 200
+    assert response.text == "server is healthy"
