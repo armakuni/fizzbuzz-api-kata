@@ -1,5 +1,5 @@
 class HealthChecker:
 
     @staticmethod
-    def is_healthy(self) -> bool:
+    def is_healthy() -> bool:
         return True
