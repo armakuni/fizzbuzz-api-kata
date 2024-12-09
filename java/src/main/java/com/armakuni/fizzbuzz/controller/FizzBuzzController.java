@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FizzBuzzController {
 
     @GetMapping("/healthcheck")
-    public String getFizzBuzz() {
+    public String isHealthy() {
 
         return "Service is up!";
     }
