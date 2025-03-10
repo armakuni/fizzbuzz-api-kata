@@ -3,7 +3,6 @@ name: Node.JS CI/CD
 on:
   push:
     branches: [main]
-    paths: /typescript/
   workflow_dispatch:
 
 jobs:
@@ -29,6 +28,7 @@ jobs:
 
       - name: NPM install, build and test
         run: |
+          cd typescript
           npm install
           npm run 
           npm test
