@@ -3,6 +3,7 @@ name: Node.JS CI/CD
 on:
   push:
     branches: [main]
+    paths: /typescript/
   workflow_dispatch:
 
 jobs:
