@@ -1,5 +1,3 @@
-export class HealthChecker {
-    isHealth(): boolean {
-        return true
-    }
+export function isHealthy(): boolean {
+    return true;
 }

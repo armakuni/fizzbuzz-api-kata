@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express'
 import { fizzbuzz } from './fizzbuzz'
+import { isHealthy } from './health/healthChecker'
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -15,7 +16,11 @@ app.get("/fizzbuzz/:number", (req:Request, res:Response) => {
 })
 
 app.get("/health", (req: Request, res: Response) => {
-    res.send("REALLY HEALTHY")
+    res.send(isHealthy() ? "Healthy" : "Unhealthy" );
+})
+
+app.get("/version", (req: Request, res: Response) => {
+    res.send("1.0")
 })
 
 app.listen(port)
