@@ -22,6 +22,7 @@ describe('FizzBuzz', () => {
         expect(fizzbuzz(1)).toBe('1');
         expect(fizzbuzz(2)).toBe('2');
         expect(fizzbuzz(7)).toBe('7');
+        expect(fizzbuzz(13)).toBe('13');
     });
 
     it('works with negative numbers', () => {
