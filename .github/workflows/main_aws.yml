@@ -1,0 +1,58 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    strategy: 
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+
+      - name: Use Node.JS ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with: 
+          node-version: ${{ matrix.node-version }}
+
+      - name: NPM install, build and test
+        run: |
+          cd typescript
+          npm install
+          npm run 
+          npm test
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [test] # Our tests must pass in order to run the deploy job
+
+    steps:
+      - name: Cache Node.js dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}
+
+      - name: Install CDK dependencies
+        working-directory: ./
+        run: npm ci
+        if: steps.cache.outputs.cache-hit != 'true'
+
+      - name: Deploy CDK stack
+        working-directory: ./
+        run: npx cdk deploy --require-approval never
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.BETA_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BETA_AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "ap-southeast-2"
