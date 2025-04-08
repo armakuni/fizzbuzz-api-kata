@@ -37,13 +37,6 @@ jobs:
     needs: [test] # Our tests must pass in order to run the deploy job
 
     steps:
-      - name: Cache Node.js dependencies
-        id: cache
-        uses: actions/cache@v2
-        with:
-          path: ./node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}
-
       - name: Install CDK dependencies
         working-directory: ./
         run: npm ci
@@ -55,4 +48,4 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.BETA_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.BETA_AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: "ap-southeast-2"
+          AWS_REGION: "eu-west-2"
